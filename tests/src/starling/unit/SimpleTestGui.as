@@ -1,12 +1,14 @@
 package starling.unit
 {
     import flash.utils.getDefinitionByName;
+    import flash.utils.setTimeout;
 
     import starling.display.Sprite;
     import starling.text.TextField;
     import starling.utils.Align;
     import starling.utils.Color;
     import starling.utils.StringUtil;
+    import starling.utils.SystemUtil;
 
     public class SimpleTestGui extends TestGui
     {
@@ -38,12 +40,12 @@ package starling.unit
 
         override public function onFinished():void
         {
-            try
+            if (SystemUtil.isAIR)
             {
-                var nativeApp:Class = getDefinitionByName("flash.desktop.NativeApplication") as Class;
-                nativeApp["nativeApplication"].exit((testCount == successCount) ? 0 : 1);
+                var nativeAppClass:Object = getDefinitionByName("flash.desktop::NativeApplication");
+                var nativeApp:Object = nativeAppClass["nativeApplication"];
+                setTimeout(nativeApp.exit, 5000, (testCount == successCount) ? 0 : 1);
             }
-            catch (e:Error) {}
         }
 
         override public function log(message:String, color:uint=0xffffff):void
