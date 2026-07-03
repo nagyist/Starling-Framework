@@ -158,18 +158,22 @@ package starling.rendering
             _stateStackLength = 0;
         }
 
-        /** Disposes all mesh batches, programs, and - if it is not being shared -
-         *  the render context. */
+        /** Disposes all mesh batches and - if it is not being shared -
+         *  the render context and its programs. */
         public function dispose():void
         {
+            _stage3D.removeEventListener(Event.CONTEXT3D_CREATE, onContextCreated);
             _batchProcessorCurr.dispose();
             _batchProcessorPrev.dispose();
             _batchProcessorSpec.dispose();
 
             if (!_shareContext)
             {
+                for each (var program:Program in programs)
+                    program.dispose();
+
                 if (_context) _context.dispose(false);
-                sSharedData = new Dictionary();
+                delete sSharedData[stage3D];
             }
         }
 
