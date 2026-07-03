@@ -173,7 +173,7 @@ package starling.rendering
                     program.dispose();
 
                 if (_context) _context.dispose(false);
-                delete sSharedData[stage3D];
+                delete sSharedData[_stage3D];
             }
         }
 
