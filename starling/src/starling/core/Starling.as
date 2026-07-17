@@ -434,7 +434,7 @@ package starling.core
          *  <code>Event.RENDER_COMPLETE</code>-event on the Starling instance too.</p> */
         public function render():void
         {
-            if (!contextValid)
+            if (!contextValid || _viewPort.isEmpty())
                 return;
 
             makeCurrent();
